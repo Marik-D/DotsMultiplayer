@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UIElements;
 
 public class BoardInteractor : MonoBehaviour
 {
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
+    
+    public GameObject redCapturePrefab;
 
     private BoardState _state;
     private SpriteRenderer _spriteRenderer;
@@ -20,6 +23,8 @@ public class BoardInteractor : MonoBehaviour
         
         var gridSize = _spriteRenderer.size / 0.64f;
         _state = new BoardState((int)gridSize.y, (int)gridSize.x);
+        
+        SyncBoardState();
     }
 
     // Update is called once per frame
@@ -53,9 +58,9 @@ public class BoardInteractor : MonoBehaviour
         {
             Destroy(transform.GetChild(i).gameObject);                
         }
-        for (int i = 0; i < _state.rows; i++)
+        for (int i = 0; i < _state.Rows; i++)
         {
-            for (int j = 0; j < _state.cols; j++)
+            for (int j = 0; j < _state.Cols; j++)
             {
                 var cell = _state.Get(i, j);
                 if (cell.IsPlaced)
@@ -65,5 +70,9 @@ public class BoardInteractor : MonoBehaviour
                 }
             }
         }
+
+        // var capture = Instantiate(redCapturePrefab, transform.position, Quaternion.identity, transform);
+        //
+        // capture.GetComponent<SpriteShapeController>().spline.SetPosition(0, new Vector3(-5, -5, 0));
     }
 }
