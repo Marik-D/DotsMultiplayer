@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
 using DotsCore;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -94,8 +93,6 @@ public class BoardInteractor : MonoBehaviour
             var dotLocation = GetOnScreenLocation(i, j);
             Instantiate(debugDotPrefab, transform.TransformPoint(dotLocation), Quaternion.identity, transform);
         }
-
-        new Foo();
     }
 
     private Vector2 GetOnScreenLocation(int row, int col)

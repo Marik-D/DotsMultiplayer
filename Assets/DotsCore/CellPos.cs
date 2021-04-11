@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DefaultNamespace
+namespace DotsCore
 {
     public class CellPos : IComparable<CellPos>
     {

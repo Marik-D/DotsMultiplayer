@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 
-namespace DefaultNamespace
+namespace DotsCore
 {
     /// <summary>
     /// A series of points forming a closed cycle. Cycles are normalized normalized to be looping in a clockwise direction and points are sorted.  
