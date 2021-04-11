@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -10,6 +11,7 @@ public class BoardInteractor : MonoBehaviour
 {
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
+    public GameObject debugDotPrefab;
     
     public GameObject redCapturePrefab;
 
@@ -81,6 +83,15 @@ public class BoardInteractor : MonoBehaviour
                 var (row, col) = capture.Points.Points[i];
                 shape.spline.InsertPointAt(i, GetOnScreenLocation(row, col));
             }
+        }
+
+        if (_state.Captures.Count > 0)
+        {
+            var last = _state.Captures.Last();
+            var (i, j) = _state.GetPointInside(last.Points);
+            
+            var dotLocation = GetOnScreenLocation(i, j);
+            Instantiate(debugDotPrefab, transform.TransformPoint(dotLocation), Quaternion.identity, transform);
         }
     }
 

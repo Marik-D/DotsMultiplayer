@@ -186,7 +186,7 @@ namespace DefaultNamespace
                 {
                     if (neighbour == from) // Found a cycle
                     {
-                        if (stack.Count > 2) // Prevent short cycles
+                        if (stack.Count > 3) // Prevent short cycles
                         {
                             // TODO: check that cycle does not self-intersect
                             cycles.Add(new Cycle(new List<CellPos>(stack.ToArray())));
@@ -206,7 +206,7 @@ namespace DefaultNamespace
             return cycles;
         }
 
-        private CellPos GetPointInside(Cycle cycle)
+        public CellPos GetPointInside(Cycle cycle)
         {
             foreach (var (prev, curr, next) in cycle.Triples())
             {
@@ -222,7 +222,7 @@ namespace DefaultNamespace
             return null;
         }
 
-        private IEnumerable<CellPos> EnumeratePointsInCycle(Cycle cycle)
+        public  IEnumerable<CellPos> EnumeratePointsInCycle(Cycle cycle)
         {
             var inside = GetPointInside(cycle);
             if (inside == null)
