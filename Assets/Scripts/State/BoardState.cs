@@ -85,7 +85,24 @@ namespace DefaultNamespace
             var cycles = GetCycles(from, forPlayer);
             foreach (var cycle in cycles)
             {
-                Debug.Log(cycle);
+                var captured = false;
+                foreach (var inside in EnumeratePointsInCycle(cycle))
+                {
+                    if (Get(inside).IsPlaced && Get(inside).Player != forPlayer)
+                    {
+                        captured = true;
+                        _state[inside.Row, inside.Col].IsCaptured = true;
+                    }
+                }
+                
+                if (captured)
+                {
+                    Captures.Add(new Capture
+                    {
+                        Player = forPlayer,
+                        Points = cycle
+                    });
+                }
             }
         }
 
@@ -124,6 +141,26 @@ namespace DefaultNamespace
                 yield return new CellPos(pos.Row - 1, pos.Col + 1);
             }
         }
+        
+        private IEnumerable<CellPos> GetDirectNeighbours(CellPos pos)
+        {
+            if (pos.Row > 0)
+            {
+                yield return new CellPos(pos.Row - 1, pos.Col);
+            }
+            if (pos.Col > 0)
+            {
+                yield return new CellPos(pos.Row, pos.Col - 1);
+            }
+            if (pos.Row < Rows - 1)
+            {
+                yield return new CellPos(pos.Row + 1, pos.Col);
+            }
+            if (pos.Col < Cols - 1)
+            {
+                yield return new CellPos(pos.Row, pos.Col + 1);
+            }
+        }
 
         private IEnumerable<CellPos> GetActiveNeighbours(CellPos from, Player player)
         {
@@ -154,7 +191,8 @@ namespace DefaultNamespace
                             // TODO: check that cycle does not self-intersect
                             cycles.Add(new Cycle(new List<CellPos>(stack.ToArray())));
                         }    
-                    } else if (!stack.Contains(neighbour) && stack.All(point => point == stack.Peek() || !point.IsNeighbourOf(neighbour))) // Prevent self-intersecting cycles
+                    } 
+                    else if (!stack.Contains(neighbour) && stack.All(point => point == stack.Peek() || !point.IsNeighbourOf(neighbour))) // Prevent self-intersecting cycles
                     {
                         stack.Push(neighbour);
                         Rec();
@@ -166,6 +204,51 @@ namespace DefaultNamespace
             Rec();
 
             return cycles;
+        }
+
+        private CellPos GetPointInside(Cycle cycle)
+        {
+            foreach (var (prev, curr, next) in cycle.Triples())
+            {
+                foreach (var candidate in GetNeighbours(curr))
+                {
+                    if (CellPos.Cross(next, candidate) > 0 && CellPos.Cross(candidate, prev) > 0)
+                    {
+                        return candidate;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        private IEnumerable<CellPos> EnumeratePointsInCycle(Cycle cycle)
+        {
+            var inside = GetPointInside(cycle);
+            if (inside == null)
+            {
+                yield break;
+            }
+            
+            var cyclesPlayer = Get(cycle.Points[0]).Player;
+            var visited = new bool[Rows, Cols];
+            var queue = new Queue<CellPos>();
+            queue.Enqueue(inside);
+
+            while (queue.Count > 0)
+            {
+                var next = queue.Dequeue();
+                visited[next.Row, next.Col] = true;
+                yield return next;
+                
+                foreach (var neighbour in GetDirectNeighbours(next))
+                {
+                    if (!visited[neighbour.Row, neighbour.Col] && !CanParticipateInCapture(neighbour, cyclesPlayer)) // Stop when reaching cycle's border. There should be a direct path to all points inside the cycle.
+                    {
+                        queue.Enqueue(neighbour);
+                    }
+                }
+            }
         }
     }
 }

@@ -13,9 +13,15 @@ namespace DefaultNamespace
             Col = col;
         }
 
+        public void Deconstruct(out int row, out int col)
+        {
+            row = Row;
+            col = Col;
+        }
+
         protected bool Equals(CellPos other)
         {
-            return Row == other.Row && Col == other.Col;
+            return other != null && Row == other.Row && Col == other.Col;
         }
 
         public override bool Equals(object obj)
@@ -50,6 +56,20 @@ namespace DefaultNamespace
         public bool IsNeighbourOf(CellPos other)
         {
             return Math.Abs(this.Row - other.Row) < 1 && Math.Abs(this.Col - other.Col) < 1;
+        }
+        
+        public static CellPos operator -(CellPos a, CellPos b) => new CellPos(a.Row - b.Row, a.Col - b.Col);
+
+        /// <summary>
+        /// Сross-product modulo of vectors representing two point's positions.
+        /// Will be a positive number when second vector is rotated clockwise in relation to the first one.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static int Cross(CellPos a, CellPos b)
+        {
+            return a.Col * b.Row - a.Row * b.Col;
         }
     }
 }

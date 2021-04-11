@@ -65,14 +65,27 @@ public class BoardInteractor : MonoBehaviour
                 var cell = _state.Get(i, j);
                 if (cell.IsPlaced)
                 {
-                    var dotLocation = new Vector2(j + 1, i + 1) * 0.64f - _spriteRenderer.size / 2;
+                    var dotLocation = GetOnScreenLocation(i, j);
                     Instantiate(cell.Player == Player.Red ? redDotPrefab : blueDotPrefab, transform.TransformPoint(dotLocation), Quaternion.identity, transform);
                 }
             }
         }
+        
+        foreach (var capture in _state.Captures)
+        {
+            var obj = Instantiate(redCapturePrefab, transform.position, Quaternion.identity, transform);
+            var shape = obj.GetComponent<SpriteShapeController>();
+            shape.spline.Clear();
+            for (int i = 0; i < capture.Points.Points.Count; i++)
+            {
+                var (row, col) = capture.Points.Points[i];
+                shape.spline.InsertPointAt(i, GetOnScreenLocation(row, col));
+            }
+        }
+    }
 
-        // var capture = Instantiate(redCapturePrefab, transform.position, Quaternion.identity, transform);
-        //
-        // capture.GetComponent<SpriteShapeController>().spline.SetPosition(0, new Vector3(-5, -5, 0));
+    private Vector2 GetOnScreenLocation(int row, int col)
+    {
+        return new Vector2(col + 1, row + 1) * 0.64f - _spriteRenderer.size / 2;
     }
 }

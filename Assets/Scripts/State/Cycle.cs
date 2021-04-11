@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace DefaultNamespace
 {
+    /// <summary>
+    /// A series of points forming a closed cycle. Cycles are normalized normalized to be looping in a clockwise direction and points are sorted.  
+    /// </summary>
     public class Cycle
     {
         public List<CellPos> Points;
@@ -15,13 +18,29 @@ namespace DefaultNamespace
             Normalize();
         }
 
-        public void Normalize()
+        public CellPos GetWrapping(int index) => Points[(index + Points.Count) % Points.Count];
+
+        public IEnumerable<(CellPos, CellPos, CellPos)> Triples()
         {
-            int sum = 0;
             for (int i = 0; i < Points.Count; i++)
             {
-                var next = i == Points.Count - 1 ? 0 : i + 1;
-                sum += Points[i].Col * Points[next].Row - Points[i].Row * Points[next].Col;
+                var curr = Points[i];
+                var next = GetWrapping(i + 1);
+                var prev = GetWrapping(i - 1);
+
+                yield return (prev, curr, next);
+            }
+        }
+
+        private void Normalize()
+        {
+            int sum = 0;
+            foreach (var (prev, curr, next) in Triples())
+            {
+                var deltaPrev = curr - prev;
+                var deltaNext = next - curr;
+                
+                sum += CellPos.Cross(deltaPrev, deltaNext);
             }
 
             if (sum < 0) // Cycle is counter-clockwise
