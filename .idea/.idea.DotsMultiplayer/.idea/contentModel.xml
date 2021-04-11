@@ -6,6 +6,9 @@
     <e p="C:\Users\dmaretskyi\Documents\Projects\DotsMultiplayer" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="DotsCore" t="Include">
+          <e p="Foo.cs" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
           <e p="BoardInteractor.cs" t="Include" />
           <e p="State" t="Include">
