@@ -212,7 +212,7 @@ namespace DefaultNamespace
             {
                 foreach (var candidate in GetNeighbours(curr))
                 {
-                    if (CellPos.Cross(next, candidate) > 0 && CellPos.Cross(candidate, prev) > 0)
+                    if (CellPos.Cross(next, candidate) < 0 && CellPos.Cross(candidate, prev) < 0)
                     {
                         return candidate;
                     }
@@ -222,7 +222,7 @@ namespace DefaultNamespace
             return null;
         }
 
-        public  IEnumerable<CellPos> EnumeratePointsInCycle(Cycle cycle)
+        public IEnumerable<CellPos> EnumeratePointsInCycle(Cycle cycle)
         {
             var inside = GetPointInside(cycle);
             if (inside == null)

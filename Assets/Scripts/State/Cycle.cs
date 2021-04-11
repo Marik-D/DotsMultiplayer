@@ -43,7 +43,7 @@ namespace DefaultNamespace
                 sum += CellPos.Cross(deltaPrev, deltaNext);
             }
 
-            if (sum < 0) // Cycle is counter-clockwise
+            if (sum > 0) // Cycle is counter-clockwise
             {
                 Points.Reverse();
             }
@@ -97,7 +97,13 @@ namespace DefaultNamespace
 
         public override int GetHashCode()
         {
-            return (Points != null ? Points.GetHashCode() : 0);
+            int code = 0;
+            for (int i = 0; i < Points.Count; i++)
+            {
+                code ^= (i * 1083) ^ Points[i].GetHashCode();
+            }
+
+            return code;
         }
     }
 }

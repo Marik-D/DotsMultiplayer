@@ -40,9 +40,9 @@ namespace DefaultNamespace
             }
         }
 
-        public static bool operator ==(CellPos a, CellPos b) => !(a is null) && a.Equals(b);
+        public static bool operator ==(CellPos a, CellPos b) => a is null && b is null || !(a is null) && a.Equals(b);
 
-        public static bool operator !=(CellPos a, CellPos b) => !(a is null) && !a.Equals(b);
+        public static bool operator !=(CellPos a, CellPos b) => !(a == b);
 
         public int CompareTo(CellPos other)
         {
@@ -62,7 +62,7 @@ namespace DefaultNamespace
 
         /// <summary>
         /// Сross-product modulo of vectors representing two point's positions.
-        /// Will be a positive number when second vector is rotated clockwise in relation to the first one.
+        /// Will be a positive number when second vector is rotated counter-clockwise in relation to the first one.
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -70,6 +70,11 @@ namespace DefaultNamespace
         public static int Cross(CellPos a, CellPos b)
         {
             return a.Col * b.Row - a.Row * b.Col;
+        }
+
+        public override string ToString()
+        {
+            return $"({Row}, {Col})";
         }
     }
 }
