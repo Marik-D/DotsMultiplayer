@@ -188,8 +188,12 @@ namespace DefaultNamespace
                     {
                         if (stack.Count > 3) // Prevent short cycles
                         {
-                            // TODO: check that cycle does not self-intersect
-                            cycles.Add(new Cycle(new List<CellPos>(stack.ToArray())));
+                            var cycle = new Cycle(new List<CellPos>(stack.ToArray()));
+                            if (!cycle.IsSelfIntersecting())
+                            {
+                                cycle.Normalize();
+                                cycles.Add(cycle);
+                            }
                         }    
                     } 
                     else if (!stack.Contains(neighbour) && stack.All(point => point == stack.Peek() || !point.IsNeighbourOf(neighbour))) // Prevent self-intersecting cycles

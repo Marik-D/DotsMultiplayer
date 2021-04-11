@@ -14,8 +14,22 @@ namespace DefaultNamespace
         public Cycle(List<CellPos> points)
         {
             Points = points;
-            
-            Normalize();
+        }
+
+        public bool IsSelfIntersecting()
+        {
+            foreach (var (prev, curr, next) in Triples())
+            {
+                foreach (var other in Points)
+                {
+                    if (other != prev && other != curr && other != next && other.IsNeighbourOf(curr))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public CellPos GetWrapping(int index) => Points[(index + Points.Count) % Points.Count];
@@ -32,7 +46,7 @@ namespace DefaultNamespace
             }
         }
 
-        private void Normalize()
+        public void Normalize()
         {
             int sum = 0;
             foreach (var (prev, curr, next) in Triples())
