@@ -47,6 +47,30 @@ R B .
                 Assert.AreEqual(1, cycles.Count());
             }
         }
+        
+        [TestFixture]
+        public class GetPointInside
+        {
+            [Test]
+            public void Diamond()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. R .
+R . R
+. R .
+                ");
+                var cycle = new Cycle(TestUtils.ParsePoints(@"
+. 2 .
+1 . 3
+. 0 .
+                "));
+                cycle.Normalize();
+
+                var inside = board.GetPointInside(cycle);
+
+                Assert.AreEqual(new CellPos(1, 1), inside);
+            }
+        }
 
         [TestFixture]
         public class Captures
@@ -75,6 +99,49 @@ R B .
                 ");
 
                 board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(1, board.Captures.Count);
+            }
+            
+            [Test]
+            public void EmptyDiamondWithPointOnOutside()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. B .
+. R .
+R . .
+. R .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(0, board.Captures.Count);
+            }
+            
+            [Test]
+            public void EmptyDiamondWithPointOnCorner()
+            {
+                var board = TestUtils.ParseBoardState(@"
+B R .
+R . .
+. R .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(0, board.Captures.Count);
+            }
+            
+            [Test]
+            public void WideDiamondCapture()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. R R .
+R B . .
+. R R .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 3), Player.Red);
 
                 Assert.AreEqual(1, board.Captures.Count);
             }

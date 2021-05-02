@@ -15,7 +15,7 @@ namespace CoreTest
             [Test]
             public void Noop()
             {
-                var cycle = new Cycle(TestUtils.ParseGrid(@"
+                var cycle = new Cycle(TestUtils.ParsePoints(@"
  .  2  . 
  1  .  3 
  .  0  .
@@ -34,7 +34,7 @@ namespace CoreTest
             [Test]
             public void Reverse()
             {
-                var cycle = new Cycle(TestUtils.ParseGrid(@"
+                var cycle = new Cycle(TestUtils.ParsePoints(@"
  .  3  . 
  0  .  2 
  .  1  .
@@ -55,7 +55,7 @@ namespace CoreTest
             [Test]
             public void No()
             {
-                var cycle = new Cycle(TestUtils.ParseGrid(@"
+                var cycle = new Cycle(TestUtils.ParsePoints(@"
  .  2  . 
  1  .  3 
  .  0  .
@@ -67,7 +67,7 @@ namespace CoreTest
             [Test]
             public void Yes()
             {
-                var cycle = new Cycle(TestUtils.ParseGrid(@"
+                var cycle = new Cycle(TestUtils.ParsePoints(@"
  .  2  3  4  .
  1  .  7  .  5
  .  0  .  6  .

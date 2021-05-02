@@ -29,7 +29,7 @@ namespace CoreTest
         [Test]
         public void ParseGrid()
         {
-            var points = TestUtils.ParseGrid(@"
+            var points = TestUtils.ParsePoints(@"
  .  2  . 
  1  .  3 
  .  0  .

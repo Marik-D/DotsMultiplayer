@@ -41,7 +41,7 @@ namespace DotsCore
             return buffer;
         }
 
-        public static List<CellPos> ParseGrid(string str)
+        public static List<CellPos> ParsePoints(string str)
         {
             var cells = str
                 .Split('\n')
