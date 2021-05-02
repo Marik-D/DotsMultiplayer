@@ -2,6 +2,9 @@
 
 namespace DotsCore
 {
+    /// <summary>
+    /// Coordinates are defined as a grid, with (0; 0) being in the bottom-left corner.
+    /// </summary>
     public class CellPos : IComparable<CellPos>
     {
         public int Row;
@@ -62,7 +65,7 @@ namespace DotsCore
 
         /// <summary>
         /// Сross-product modulo of vectors representing two point's positions.
-        /// Will be a positive number when second vector is rotated clockwise in relation to the first one.
+        /// Will be a negative number when second vector is rotated clockwise in relation to the first one.
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
