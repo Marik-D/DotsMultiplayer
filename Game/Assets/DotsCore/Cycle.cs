@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DotsCore
 {
@@ -116,6 +118,15 @@ namespace DotsCore
             }
 
             return code;
+        }
+
+        /// <summary>
+        /// Visialize the cycle on a grid.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return TestUtils.StringifyGrid(Points);
         }
     }
 }

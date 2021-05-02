@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DotsCore;
 using NUnit.Framework;
 
@@ -23,6 +24,24 @@ namespace CoreTest
             
             Assert.True(CellPos.Cross(top, right) < 0);
             Assert.True(CellPos.Cross(right, top) > 0);
+        }
+        
+        [Test]
+        public void ParseGrid()
+        {
+            var points = TestUtils.ParseGrid(@"
+ .  2  . 
+ 1  .  3 
+ .  0  .
+            ");
+            
+            Assert.AreEqual(new List<CellPos>
+                {
+                    new CellPos(0, 1),
+                    new CellPos(1, 0),
+                    new CellPos(2, 1),
+                    new CellPos(1, 2),
+                }, points);
         }
     }
 }
