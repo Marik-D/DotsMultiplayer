@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{9EF5E887-7C40-485F-84F4-7EAF80DDAAE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Game\Assets\DotsCore\Core.csproj", "{17A458CB-3801-4D20-9105-C31D3A3637A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreTest", "CoreTest\CoreTest.csproj", "{EA0C4087-9E25-4D9A-B7B8-E7C5F7377D97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9EF5E887-7C40-485F-84F4-7EAF80DDAAE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9EF5E887-7C40-485F-84F4-7EAF80DDAAE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9EF5E887-7C40-485F-84F4-7EAF80DDAAE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9EF5E887-7C40-485F-84F4-7EAF80DDAAE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17A458CB-3801-4D20-9105-C31D3A3637A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17A458CB-3801-4D20-9105-C31D3A3637A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17A458CB-3801-4D20-9105-C31D3A3637A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17A458CB-3801-4D20-9105-C31D3A3637A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA0C4087-9E25-4D9A-B7B8-E7C5F7377D97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA0C4087-9E25-4D9A-B7B8-E7C5F7377D97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA0C4087-9E25-4D9A-B7B8-E7C5F7377D97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA0C4087-9E25-4D9A-B7B8-E7C5F7377D97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
