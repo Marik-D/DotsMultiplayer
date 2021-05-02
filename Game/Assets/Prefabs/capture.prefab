@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2742670137529512782}
   - component: {fileID: 119875413795289863}
   m_Layer: 0
-  m_Name: New SpriteShapeController (1)
+  m_Name: capture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52,7 +52,7 @@ SpriteShapeRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -73,10 +73,18 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Color: {r: 1, g: 0, b: 0, a: 0.57254905}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_MaskInteraction: 0
-  m_ShapeTexture: {fileID: 0}
-  m_Sprites: []
+  m_ShapeTexture: {fileID: 2800000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  m_Sprites:
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
+  - {fileID: 21300000, guid: 0c49910f83ea5fe4d99ca67ad4e59f81, type: 3}
   m_LocalAABB:
     m_Center: {x: 0, y: -0.00000023841858, z: 0}
     m_Extent: {x: 2.0000002, y: 2, z: 0}
@@ -135,7 +143,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 0
       m_CornerMode: 1
-  m_SpriteShape: {fileID: 0}
+  m_SpriteShape: {fileID: 11400000, guid: b90af2f6c0cb3414383084cb41ffd463, type: 2}
   m_FillPixelPerUnit: 100
   m_StretchTiling: 1
   m_SplineDetail: 16

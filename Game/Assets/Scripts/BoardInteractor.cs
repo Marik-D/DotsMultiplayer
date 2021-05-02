@@ -11,10 +11,14 @@ public class BoardInteractor : MonoBehaviour
 {
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
-    public GameObject debugDotPrefab;
-    
     public GameObject redCapturePrefab;
 
+    public Color redColor = new Color(255, 0, 0);
+    public Color blueColor = new Color(0, 0, 255);
+    
+    [Range(0f, 1f)]
+    public float captureOpacity = 0.57f;
+    
     private BoardState _state;
     private SpriteRenderer _spriteRenderer;
 
@@ -83,15 +87,10 @@ public class BoardInteractor : MonoBehaviour
                 var (row, col) = capture.Points.Points[i];
                 shape.spline.InsertPointAt(i, GetOnScreenLocation(row, col));
             }
-        }
 
-        if (_state.Captures.Count > 0)
-        {
-            var last = _state.Captures.Last();
-            var (i, j) = _state.GetPointInside(last.Points);
-            
-            var dotLocation = GetOnScreenLocation(i, j);
-            Instantiate(debugDotPrefab, transform.TransformPoint(dotLocation), Quaternion.identity, transform);
+            var color = capture.Player == Player.Red ? redColor : blueColor;
+            color.a = captureOpacity;
+            obj.GetComponent<SpriteShapeRenderer>().color = color;
         }
     }
 

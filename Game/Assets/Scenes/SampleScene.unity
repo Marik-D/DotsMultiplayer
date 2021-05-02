@@ -238,8 +238,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   redDotPrefab: {fileID: 1149161664241613967, guid: 910c7e45ed9c47846ba33b48b3ed0ddf, type: 3}
   blueDotPrefab: {fileID: 3727897039239377393, guid: b4c5e1e745bc1874eab39eaf7ff06b4a, type: 3}
-  debugDotPrefab: {fileID: 5878617076219614125, guid: ac7335352b599d748af6580dfeb35f19, type: 3}
   redCapturePrefab: {fileID: 2210693725905568504, guid: 544cc9a3c281ec940ac920f017051001, type: 3}
+  redColor: {r: 255, g: 0, b: 0, a: 1}
+  blueColor: {r: 0, g: 0, b: 255, a: 1}
+  captureOpacity: 0.57
 --- !u!212 &1189836902
 SpriteRenderer:
   m_ObjectHideFlags: 0
