@@ -10,7 +10,7 @@ namespace CoreTest
     {
 
         [TestFixture]
-        public class Normalize : CycleTests
+        public class Normalize
         {
             [Test]
             public void Noop()
@@ -50,7 +50,7 @@ namespace CoreTest
         }
 
         [TestFixture]
-        public class IsSelfIntersecting : CycleTests
+        public class IsSelfIntersecting
         {
             [Test]
             public void No()

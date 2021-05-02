@@ -83,10 +83,52 @@ namespace DotsCore
 
             if (points.Any(p => p == null))
             {
-                throw new Exception("Failed to parse grid");
+                throw new ArgumentException("Invalid board.");
             }
 
             return points;
+        }
+
+        public static BoardState ParseBoardState(string str)
+        {
+            var cells = str
+                .Split('\n')
+                .Select(s => s.Trim())
+                .Where(s => s.Length > 0)
+                .Select(row => row
+                    .Split(' ')
+                    .Select(s => s.Trim())
+                    .Where(s => s.Length > 0)
+                    .ToArray()
+                )
+                .ToArray();
+            
+            var rows = cells.Length;
+            var cols = cells.Max(row => row.Length);
+
+            var state = new BoardState(rows, cols);
+            
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    switch (cells[i][j])
+                    {
+                        case "R":
+                            state.PlaceByPlayer(new CellPos(rows - i - 1, j), Player.Red);
+                            break;
+                        case "B":
+                            state.PlaceByPlayer(new CellPos(rows - i - 1, j), Player.Blue);
+                            break;
+                        case ".":
+                            break;
+                        default:
+                            throw new ArgumentException("Invalid board.");
+                    }
+                }
+            }
+
+            return state;
         }
     }
 }

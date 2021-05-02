@@ -66,17 +66,27 @@ namespace DotsCore
 
         public void Place(int row, int col)
         {
+            PlaceByPlayer(new CellPos(row, col), CurrentMove);
+            
+            CurrentMove = CurrentMove == Player.Red ? Player.Blue : Player.Red;
+        }
+
+        public void PlaceByPlayer(CellPos pos, Player player, bool recalculateCaptures = true)
+        {
+            var (row, col) = pos;
+            
             if (!CanPlace(row, col))
             {
                 throw new ArgumentException();
             }
 
             _state[row, col].IsPlaced = true;
-            _state[row, col].Player = CurrentMove;
-            
-            RecalculateCaptures(new CellPos(row, col), CurrentMove);
-            
-            CurrentMove = CurrentMove == Player.Red ? Player.Blue : Player.Red;
+            _state[row, col].Player = player;
+
+            if (recalculateCaptures)
+            {
+                RecalculateCaptures(new CellPos(row, col), player);
+            }
         }
 
         private void RecalculateCaptures(CellPos from, Player forPlayer)
@@ -172,7 +182,7 @@ namespace DotsCore
             }
         }
 
-        private IEnumerable<Cycle> GetCycles(CellPos from, Player player)
+        public IEnumerable<Cycle> GetCycles(CellPos from, Player player)
         {
             var cycles = new HashSet<Cycle>();
             
@@ -185,6 +195,7 @@ namespace DotsCore
                 {
                     if (neighbour == from) // Found a cycle
                     {
+                        Console.WriteLine(stack);
                         if (stack.Count > 3) // Prevent short cycles
                         {
                             var cycle = new Cycle(new List<CellPos>(stack.ToArray()));
@@ -195,7 +206,7 @@ namespace DotsCore
                             }
                         }    
                     } 
-                    else if (!stack.Contains(neighbour) && stack.All(point => point == stack.Peek() || !point.IsNeighbourOf(neighbour))) // Prevent self-intersecting cycles
+                    else if (!stack.Contains(neighbour)) // Prevent self-intersecting cycles
                     {
                         stack.Push(neighbour);
                         Rec();
