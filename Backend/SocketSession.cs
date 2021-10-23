@@ -9,16 +9,18 @@ namespace Backend
 {
     public class SocketSession : WsSession
     {
-        private BoardState _gameState = new BoardState(15, 15);
-        
-        public SocketSession(WsServer server) : base(server) { }
+        private readonly SocketServer _server;
+        public SocketSession(SocketServer server) : base(server)
+        {
+            _server = server;
+        }
 
         public override void OnWsConnected(HttpRequest request)
         {
             Console.WriteLine($"Chat WebSocket session with Id {Id} connected!");
 
             // Send invite message
-            var message = JsonConvert.SerializeObject(_gameState);
+            var message = JsonConvert.SerializeObject(_server.GameState.BoardState);
             this.SendText(message);
         }
 
@@ -34,11 +36,11 @@ namespace Backend
             
             Console.WriteLine("Got move: " + move);
             
-            _gameState.Place(move.Row, move.Col);
+            _server.GameState.BoardState.Place(move.Row, move.Col);
             
-            Console.WriteLine("Current move = " + _gameState.CurrentMove);
+            Console.WriteLine("Current move = " + _server.GameState.BoardState.CurrentMove);
             
-            this.SendText(JsonConvert.SerializeObject(_gameState));
+            this.SendText(JsonConvert.SerializeObject(_server.GameState.BoardState));
         }
 
         protected override void OnError(SocketError error)
