@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DotsCore;
 using NativeWebSocket;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace DefaultNamespace
     public class ServerConnection
     {
         readonly WebSocket _socket;
+
+        public WebSocketState State => _socket.State;
 
         public ServerConnection(string endpoint)
         {
@@ -35,9 +38,10 @@ namespace DefaultNamespace
             };
         }
 
-        public async Task Connect()
+        public void Connect()
         {
-            await _socket.Connect();
+            // Returned task will block until connection closes.
+            _socket.Connect();
         }
         
         public void Update()
@@ -47,17 +51,16 @@ namespace DefaultNamespace
             #endif
         }
 
-        public async Task SendWebSocketMessage()
-        {
-            if (_socket.State == WebSocketState.Open)
-            {
-                await _socket.SendText("plain text message");
-            }
-        }
-
         public async Task Close()
         {
             await _socket.Close();
+        }
+
+        public async Task MakeMove(Move move)
+        {
+            var message = JsonUtility.ToJson(move);
+            Debug.Log("json message: " + message);
+            await _socket.SendText(message);
         }
     }
 }

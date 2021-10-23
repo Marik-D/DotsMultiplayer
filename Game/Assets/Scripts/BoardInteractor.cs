@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 
 public class BoardInteractor : MonoBehaviour
 {
+    public SocketBehaviour socketBehaviour;
+    
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
     public GameObject redCapturePrefab;
@@ -51,6 +53,7 @@ public class BoardInteractor : MonoBehaviour
             if (_state.CanPlace(cellRow, cellCol))
             {
                 Debug.Log($"Placing at row={cellRow} col={cellCol}");
+                socketBehaviour.Connection.MakeMove(new Move {player = _state.CurrentMove, row = cellRow, col = cellCol});                
                 _state.Place(cellRow, cellCol);
                 
                 SyncBoardState();

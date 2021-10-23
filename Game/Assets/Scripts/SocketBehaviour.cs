@@ -1,36 +1,30 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using DotsCore;
+using NativeWebSocket;
 using UnityEngine;
 
 public class SocketBehaviour : MonoBehaviour
 {
-    ServerConnection _connection = new ServerConnection("ws://localhost:8080");
+    public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
     
     // Start is called before the first frame update
-    async void Start()
+    void Start()
     {
-        _connection.Connect();
-        
         Debug.Log("Connecting");
+        Connection.Connect();
         
-        InvokeRepeating(nameof(SendWebSocketMessage), 0.0f, 0.3f);
-    }
-    
-    async void SendWebSocketMessage()
-    {
-        Debug.Log("Send message");
-        await _connection.SendWebSocketMessage();
     }
 
     // Update is called once per frame
     void Update()
     {
-        _connection.Update();
+        Connection.Update();
     }
     
     private void OnApplicationQuit()
     {
-        _connection.Close();
+        Connection.Close();
     }
 }

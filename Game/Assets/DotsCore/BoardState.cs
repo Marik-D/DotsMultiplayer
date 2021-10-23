@@ -4,6 +4,14 @@ using System.Linq;
 
 namespace DotsCore
 {
+    [Serializable]
+    public struct Move
+    {
+        public Player player;
+        public int row;
+        public int col;
+    }
+    
     public enum Player
     {
         Red,
