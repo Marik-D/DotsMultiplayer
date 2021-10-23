@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DotsCore;
 using NativeWebSocket;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -39,7 +40,7 @@ namespace DefaultNamespace
                 var message = System.Text.Encoding.UTF8.GetString(bytes);
                 Debug.Log("received message " + message);
 
-                var boardState = JsonUtility.FromJson<BoardState>(message);
+                var boardState = JsonConvert.DeserializeObject<BoardState>(message);
 
                 this.BoardStateUpdated?.Invoke(boardState);
             };

@@ -34,7 +34,9 @@ namespace Backend
             
             Console.WriteLine("Got move: " + move);
             
-            _gameState.PlaceByPlayer(new CellPos(move.Row, move.Col), move.Player);
+            _gameState.Place(move.Row, move.Col);
+            
+            Console.WriteLine("Current move = " + _gameState.CurrentMove);
             
             this.SendText(JsonConvert.SerializeObject(_gameState));
         }
