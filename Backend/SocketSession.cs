@@ -28,8 +28,7 @@ namespace Backend
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
             Console.WriteLine("Incoming: " + message);
 
-            // Multicast message to all connected sessions
-            ((WsServer)Server).MulticastText(message);
+            this.SendText("PONG: " + message);
 
             // If the buffer starts with '!' the disconnect the current session
             if (message == "!")
