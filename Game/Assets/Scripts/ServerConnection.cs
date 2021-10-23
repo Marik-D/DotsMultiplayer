@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using DotsCore;
 using NativeWebSocket;
 using UnityEngine;
@@ -10,6 +11,8 @@ namespace DefaultNamespace
         readonly WebSocket _socket;
 
         public WebSocketState State => _socket.State;
+        
+        public event Action<BoardState> BoardStateUpdated;
 
         public ServerConnection(string endpoint)
         {
@@ -34,7 +37,11 @@ namespace DefaultNamespace
             {
                 // getting the message as a string
                 var message = System.Text.Encoding.UTF8.GetString(bytes);
-                Debug.Log("OnMessage! " + message);
+                Debug.Log("received message " + message);
+
+                var boardState = JsonUtility.FromJson<BoardState>(message);
+
+                this.BoardStateUpdated?.Invoke(boardState);
             };
         }
 

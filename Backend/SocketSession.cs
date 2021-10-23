@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using DotsCore;
 using NetCoreServer;
+using Newtonsoft.Json;
 
 namespace Backend
 {
     public class SocketSession : WsSession
     {
+        private BoardState _gameState = new BoardState(15, 15);
+        
         public SocketSession(WsServer server) : base(server) { }
 
         public override void OnWsConnected(HttpRequest request)
@@ -14,8 +18,8 @@ namespace Backend
             Console.WriteLine($"Chat WebSocket session with Id {Id} connected!");
 
             // Send invite message
-            string message = "Hello from WebSocket chat! Please send a message or '!' to disconnect the client!";
-            SendTextAsync(message);
+            var message = JsonConvert.SerializeObject(_gameState);
+            this.SendText(message);
         }
 
         public override void OnWsDisconnected()
@@ -26,13 +30,13 @@ namespace Backend
         public override void OnWsReceived(byte[] buffer, long offset, long size)
         {
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
-            Console.WriteLine("Incoming: " + message);
-
-            this.SendText("PONG: " + message);
-
-            // If the buffer starts with '!' the disconnect the current session
-            if (message == "!")
-                Close(1000);
+            var move = JsonConvert.DeserializeObject<Move>(message);
+            
+            Console.WriteLine("Got move: " + move);
+            
+            _gameState.PlaceByPlayer(new CellPos(move.Row, move.Col), move.Player);
+            
+            this.SendText(JsonConvert.SerializeObject(_gameState));
         }
 
         protected override void OnError(SocketError error)
