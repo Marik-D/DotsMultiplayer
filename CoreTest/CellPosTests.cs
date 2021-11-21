@@ -24,6 +24,7 @@ namespace CoreTest
             
             Assert.True(CellPos.Cross(top, right) < 0);
             Assert.True(CellPos.Cross(right, top) > 0);
+            Assert.True(CellPos.Cross(top, top) == 0);
         }
         
         [Test]
