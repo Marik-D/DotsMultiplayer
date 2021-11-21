@@ -108,8 +108,7 @@ namespace DotsCore
 
         private void RecalculateCaptures(CellPos from, Player forPlayer)
         {
-            var cycles = GetCycles(from, forPlayer);
-            foreach (var cycle in cycles)
+            foreach (var cycle in GetCycles(@from, forPlayer))
             {
                 var captured = false;
                 foreach (var inside in EnumeratePointsInCycle(cycle))
