@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 
 public class BoardInteractor : MonoBehaviour
 {
+    public SocketBehaviour socketBehaviour;
+    
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
     public GameObject redCapturePrefab;
@@ -28,7 +30,14 @@ public class BoardInteractor : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         
         var gridSize = _spriteRenderer.size / 0.64f;
+        Debug.Log(gridSize);
         _state = new BoardState((int)gridSize.y, (int)gridSize.x);
+
+        socketBehaviour.Connection.BoardStateUpdated += state =>
+        {
+            _state = state;
+            SyncBoardState();
+        };
         
         SyncBoardState();
     }
@@ -51,6 +60,7 @@ public class BoardInteractor : MonoBehaviour
             if (_state.CanPlace(cellRow, cellCol))
             {
                 Debug.Log($"Placing at row={cellRow} col={cellCol}");
+                socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentMove, Row = cellRow, Col = cellCol});                
                 _state.Place(cellRow, cellCol);
                 
                 SyncBoardState();

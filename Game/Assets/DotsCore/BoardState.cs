@@ -4,12 +4,27 @@ using System.Linq;
 
 namespace DotsCore
 {
+    [Serializable]
+    public struct Move
+    {
+        public Player Player;
+        public int Row;
+        public int Col;
+
+        public override string ToString()
+        {
+            return $"{nameof(Player)}: {Player}, {nameof(Row)}: {Row}, {nameof(Col)}: {Col}";
+        }
+    }
+    
+    [Serializable]
     public enum Player
     {
         Red,
         Blue
     }
 
+    [Serializable]
     public struct CellState
     {
         public Player Player;
@@ -17,19 +32,21 @@ namespace DotsCore
         public bool IsCaptured;
     }
 
+    [Serializable]
     public struct Capture
     {
         public Player Player;
         public Cycle Points;
     }
     
+    [Serializable]
     public class BoardState
     {
         public readonly int Cols;
         
         public readonly int Rows;
-
-        private CellState[,] _state;
+        
+        public CellState[,] Cells;
 
         public Player CurrentMove = Player.Red;
         
@@ -39,7 +56,7 @@ namespace DotsCore
         {
             this.Cols = cols;
             this.Rows = rows;
-            this._state = new CellState[rows, cols];
+            this.Cells = new CellState[rows, cols];
         }
 
         public bool IsValidCell(int row, int col) => row >= 0 && row < Rows && col >= 0 && col < Cols;
@@ -51,7 +68,7 @@ namespace DotsCore
                 throw new ArgumentOutOfRangeException();
             }
 
-            return _state[row, col];
+            return Cells[row, col];
         }
 
         public CellState Get(CellPos pos) => Get(pos.Row, pos.Col);
@@ -80,8 +97,8 @@ namespace DotsCore
                 throw new ArgumentException();
             }
 
-            _state[row, col].IsPlaced = true;
-            _state[row, col].Player = player;
+            Cells[row, col].IsPlaced = true;
+            Cells[row, col].Player = player;
 
             if (recalculateCaptures)
             {
@@ -91,8 +108,7 @@ namespace DotsCore
 
         private void RecalculateCaptures(CellPos from, Player forPlayer)
         {
-            var cycles = GetCycles(from, forPlayer);
-            foreach (var cycle in cycles)
+            foreach (var cycle in GetCycles(@from, forPlayer))
             {
                 var captured = false;
                 foreach (var inside in EnumeratePointsInCycle(cycle))
@@ -100,7 +116,7 @@ namespace DotsCore
                     if (Get(inside).IsPlaced && Get(inside).Player != forPlayer)
                     {
                         captured = true;
-                        _state[inside.Row, inside.Col].IsCaptured = true;
+                        Cells[inside.Row, inside.Col].IsCaptured = true;
                     }
                 }
                 

@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using DotsCore;
 using NetCoreServer;
+using Newtonsoft.Json;
 
 namespace Backend
 {
     public class SocketSession : WsSession
     {
-        public SocketSession(WsServer server) : base(server) { }
+        private readonly SocketServer _server;
+        public SocketSession(SocketServer server) : base(server)
+        {
+            _server = server;
+        }
 
         public override void OnWsConnected(HttpRequest request)
         {
             Console.WriteLine($"Chat WebSocket session with Id {Id} connected!");
 
             // Send invite message
-            string message = "Hello from WebSocket chat! Please send a message or '!' to disconnect the client!";
-            SendTextAsync(message);
+            var message = JsonConvert.SerializeObject(_server.GameState.BoardState);
+            this.SendText(message);
         }
 
         public override void OnWsDisconnected()
@@ -26,14 +32,15 @@ namespace Backend
         public override void OnWsReceived(byte[] buffer, long offset, long size)
         {
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
-            Console.WriteLine("Incoming: " + message);
-
-            // Multicast message to all connected sessions
-            ((WsServer)Server).MulticastText(message);
-
-            // If the buffer starts with '!' the disconnect the current session
-            if (message == "!")
-                Close(1000);
+            var move = JsonConvert.DeserializeObject<Move>(message);
+            
+            Console.WriteLine("Got move: " + move);
+            
+            _server.GameState.BoardState.Place(move.Row, move.Col);
+            
+            Console.WriteLine("Current move = " + _server.GameState.BoardState.CurrentMove);
+            
+            this.SendText(JsonConvert.SerializeObject(_server.GameState.BoardState));
         }
 
         protected override void OnError(SocketError error)
