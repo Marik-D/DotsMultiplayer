@@ -11,6 +11,8 @@ namespace Backend
     {
         private readonly SocketServer _server;
         private readonly JsonRpc _rpc;
+
+        private GameState _game; 
         
         public SocketSession(SocketServer server) : base(server)
         {
@@ -23,17 +25,22 @@ namespace Backend
             });
             this._rpc.Handle<Move, object>("MakeMove", move =>
             {
-                _server.GameState.BoardState.Place(move.Row, move.Col);
-
-                this._rpc.Call<BoardState, object>("UpdateBoardState", _server.GameState.BoardState);
-
+                _game.MakeMove(move);
                 return null;
             });
         }
 
+        public void AssignGame(GameState state)
+        {
+            this._game = state;
+            this._rpc.Call<ClientState, object>("UpdateClientState", ClientState.Playing);
+            this._rpc.Call<BoardState, object>("UpdateBoardState", _game.BoardState);
+        }
+
         public override void OnWsConnected(HttpRequest request)
         {
-            this._rpc.Call<BoardState, object>("UpdateBoardState", _server.GameState.BoardState);
+            this._rpc.Call<ClientState, object>("UpdateClientState", ClientState.Matchmaking);
+            _server.ServerState.OnPlayerConnected(this);
         }
 
         public override void OnWsDisconnected()
@@ -52,6 +59,11 @@ namespace Backend
         protected override void OnError(SocketError error)
         {
             Console.WriteLine($"Chat WebSocket session caught an error with code {error}");
+        }
+
+        public void UpdateBoardState(BoardState boardState)
+        {
+            this._rpc.Call<BoardState, object>("UpdateBoardState", boardState);
         }
     }
 }

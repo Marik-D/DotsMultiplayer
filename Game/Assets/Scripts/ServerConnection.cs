@@ -45,6 +45,11 @@ namespace DefaultNamespace
             };
             
             this._rpc = new JsonRpc(msg => this._socket.SendText(msg));
+            
+            this._rpc.Handle<ClientState>("UpdateClientState", state =>
+            {
+                Debug.Log("Client state updated " + state);
+            });
 
             this._rpc.Handle<BoardState>("UpdateBoardState", state =>
             {

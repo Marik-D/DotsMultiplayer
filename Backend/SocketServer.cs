@@ -8,7 +8,7 @@ namespace Backend
 {
     public class SocketServer : WsServer
     {
-        public GameState GameState = new GameState();
+        public ServerState ServerState = new ServerState();
         
         public SocketServer(IPAddress address, int port) : base(address, port) { }
 
