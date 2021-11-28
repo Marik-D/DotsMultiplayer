@@ -111,3 +111,5 @@ namespace DotsCore
         }
     }
 }
+
+// https://www.codingnagger.com/2016/11/20/dynamic-interface-implementation-runtime/
