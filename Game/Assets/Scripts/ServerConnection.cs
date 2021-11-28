@@ -9,7 +9,8 @@ namespace DefaultNamespace
 {
     public class ServerConnection
     {
-        readonly WebSocket _socket;
+        private readonly WebSocket _socket;
+        private readonly JsonRpc _rpc;
 
         public WebSocketState State => _socket.State;
         
@@ -39,11 +40,16 @@ namespace DefaultNamespace
                 // getting the message as a string
                 var message = System.Text.Encoding.UTF8.GetString(bytes);
                 Debug.Log("received message " + message);
-
-                var boardState = JsonConvert.DeserializeObject<BoardState>(message);
-
-                this.BoardStateUpdated?.Invoke(boardState);
+                
+                this._rpc.HandleMessageFromTransport(message);
             };
+            
+            this._rpc = new JsonRpc(msg => this._socket.SendText(msg));
+
+            this._rpc.Handle<BoardState>("UpdateBoardState", state =>
+            {
+                this.BoardStateUpdated?.Invoke(state);
+            });
         }
 
         public void Connect()
@@ -66,9 +72,7 @@ namespace DefaultNamespace
 
         public async Task MakeMove(Move move)
         {
-            var message = JsonUtility.ToJson(move);
-            Debug.Log("json message: " + message);
-            await _socket.SendText(message);
+            this._rpc.Call<Move, object>("MakeMove", move);
         }
     }
 }

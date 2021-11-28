@@ -10,18 +10,30 @@ namespace Backend
     public class SocketSession : WsSession
     {
         private readonly SocketServer _server;
+        private readonly JsonRpc _rpc;
+        
         public SocketSession(SocketServer server) : base(server)
         {
             _server = server;
+            
+            this._rpc = new JsonRpc(msg =>
+            {
+                Console.WriteLine("Sent message: " + msg);
+                this.SendText(msg);
+            });
+            this._rpc.Handle<Move, object>("MakeMove", move =>
+            {
+                _server.GameState.BoardState.Place(move.Row, move.Col);
+
+                this._rpc.Call<BoardState, object>("UpdateBoardState", _server.GameState.BoardState);
+
+                return null;
+            });
         }
 
         public override void OnWsConnected(HttpRequest request)
         {
-            Console.WriteLine($"Chat WebSocket session with Id {Id} connected!");
-
-            // Send invite message
-            var message = JsonConvert.SerializeObject(_server.GameState.BoardState);
-            this.SendText(message);
+            this._rpc.Call<BoardState, object>("UpdateBoardState", _server.GameState.BoardState);
         }
 
         public override void OnWsDisconnected()
@@ -32,15 +44,9 @@ namespace Backend
         public override void OnWsReceived(byte[] buffer, long offset, long size)
         {
             string message = Encoding.UTF8.GetString(buffer, (int)offset, (int)size);
-            var move = JsonConvert.DeserializeObject<Move>(message);
+            Console.WriteLine("Got message: " + message);
             
-            Console.WriteLine("Got move: " + move);
-            
-            _server.GameState.BoardState.Place(move.Row, move.Col);
-            
-            Console.WriteLine("Current move = " + _server.GameState.BoardState.CurrentMove);
-            
-            this.SendText(JsonConvert.SerializeObject(_server.GameState.BoardState));
+            this._rpc.HandleMessageFromTransport(message);
         }
 
         protected override void OnError(SocketError error)

@@ -60,7 +60,23 @@ namespace DotsCore
             {
                 var parsed = arg.ToObject<TArg>();
                 var res = handler(parsed);
+                if (res == null)
+                {
+                    return null;
+                }
                 return JToken.FromObject(res);
+            });
+            
+            return this;
+        }
+        
+        public JsonRpc Handle<TArg>(string method, Action<TArg> handler)
+        {
+            _handlers.Add(method, arg =>
+            {
+                var parsed = arg.ToObject<TArg>();
+                handler(parsed);
+                return null;
             });
             
             return this;
