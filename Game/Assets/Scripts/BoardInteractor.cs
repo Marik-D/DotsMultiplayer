@@ -5,11 +5,14 @@ using System.Linq;
 using DotsCore;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class BoardInteractor : MonoBehaviour
 {
     public SocketBehaviour socketBehaviour;
+
+    public Text currentTurnLabel; 
     
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
@@ -102,6 +105,8 @@ public class BoardInteractor : MonoBehaviour
             color.a = captureOpacity;
             obj.GetComponent<SpriteShapeRenderer>().color = color;
         }
+
+        currentTurnLabel.text = $"Current turn: {_state.CurrentMove.ToString()}";
     }
 
     private Vector2 GetOnScreenLocation(int row, int col)
