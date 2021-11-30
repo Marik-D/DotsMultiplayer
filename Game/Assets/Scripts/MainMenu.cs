@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,5 +26,11 @@ public class MainMenu : MonoBehaviour
     public void OnExitClick()
     {
         Application.Quit();
+    }
+
+    public void OnNameChanged(string name)
+    {
+        Debug.Log($"Name changed: {name}");
+        StateManager.PlayerName = name;
     }
 }
