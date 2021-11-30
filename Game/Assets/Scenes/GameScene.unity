@@ -721,6 +721,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameStateLabel: {fileID: 1138506101}
   gameStateLabelContainer: {fileID: 910925927}
+  boardRenderer: {fileID: 1189836902}
+  inGameUi: {fileID: 184010607}
 --- !u!1 &2102022514
 GameObject:
   m_ObjectHideFlags: 0

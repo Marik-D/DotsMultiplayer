@@ -10,6 +10,8 @@ public class SocketBehaviour : MonoBehaviour
 {
     public Text gameStateLabel;
     public Image gameStateLabelContainer;
+    public SpriteRenderer boardRenderer;
+    public GameObject inGameUi;
     
     public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
     
@@ -18,7 +20,9 @@ public class SocketBehaviour : MonoBehaviour
     {
         Debug.Log("Connecting");
         Connection.Connect();
-        
+
+        boardRenderer.enabled = false;
+        inGameUi.SetActive(false);
     }
 
     // Update is called once per frame
@@ -34,6 +38,8 @@ public class SocketBehaviour : MonoBehaviour
             }
             else if (state == ClientState.Playing)
             {
+                boardRenderer.enabled = true;
+                inGameUi.SetActive(true);
                 gameStateLabelContainer.gameObject.SetActive(false);
             }
         };
