@@ -28,6 +28,8 @@ namespace DefaultNamespace
             _socket.OnOpen += () =>
             {
                 Debug.Log("Connection open!");
+
+                _rpc.Call<string, object>("JoinMatchmaking", StateManager.PlayerName);
             };
 
             _socket.OnError += (e) =>

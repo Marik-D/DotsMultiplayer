@@ -10,7 +10,7 @@ namespace Backend
         
         public BoardState BoardState = new BoardState(15, 15);
         
-        public List<SocketSession> Players = new List<SocketSession>();
+        public List<PlayerSession> Players = new List<PlayerSession>();
 
         public void MakeMove(Move move)
         {

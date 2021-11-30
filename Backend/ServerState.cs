@@ -7,9 +7,9 @@ namespace Backend
     {
         public Dictionary<Guid, GameState> Games = new Dictionary<Guid, GameState>();
 
-        private SocketSession _waitingPlayer = null;
+        private PlayerSession _waitingPlayer = null;
 
-        public GameState OnPlayerConnected(SocketSession player)
+        public GameState OnPlayerConnected(PlayerSession player)
         {
             if (_waitingPlayer == null)
             {
@@ -20,7 +20,7 @@ namespace Backend
             var game = new GameState
             {
                 Id = Guid.NewGuid(),
-                Players = new List<SocketSession> {_waitingPlayer, player},
+                Players = new List<PlayerSession> {_waitingPlayer, player},
             };
             _waitingPlayer = null;
             foreach (var session in game.Players)
