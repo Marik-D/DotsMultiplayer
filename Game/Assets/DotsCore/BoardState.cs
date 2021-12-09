@@ -224,7 +224,6 @@ namespace DotsCore
                 {
                     if (neighbour == from) // Found a cycle
                     {
-                        Console.WriteLine(stack);
                         if (stack.Count > 3) // Prevent short cycles
                         {
                             var cycle = new Cycle(new List<CellPos>(stack.ToArray()));
