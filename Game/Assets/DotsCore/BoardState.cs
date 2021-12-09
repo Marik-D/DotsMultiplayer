@@ -52,6 +52,10 @@ namespace DotsCore
         
         public List<Capture> Captures = new List<Capture>();
 
+        public int RedScore;
+        
+        public int BlueScore;
+
         public BoardState(int rows, int cols)
         {
             this.Cols = cols;
@@ -113,10 +117,19 @@ namespace DotsCore
                 var captured = false;
                 foreach (var inside in EnumeratePointsInCycle(cycle))
                 {
-                    if (Get(inside).IsPlaced && Get(inside).Player != forPlayer)
+                    if (Get(inside).IsPlaced && Get(inside).Player != forPlayer && !Get(inside).IsCaptured)
                     {
                         captured = true;
                         Cells[inside.Row, inside.Col].IsCaptured = true;
+
+                        if (forPlayer == Player.Red)
+                        {
+                            RedScore++;
+                        }
+                        else
+                        {
+                            BlueScore++;
+                        }
                     }
                 }
                 

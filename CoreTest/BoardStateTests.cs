@@ -145,6 +145,21 @@ R B . .
 
                 Assert.AreEqual(1, board.Captures.Count);
             }
+            
+            [Test]
+            public void ScoreIsUpdatedOnCapture()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. R .
+R B .
+. R .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(1, board.RedScore);
+                Assert.AreEqual(0, board.BlueScore);
+            }
         }
     }
 }
