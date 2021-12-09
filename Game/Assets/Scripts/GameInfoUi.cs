@@ -8,6 +8,9 @@ public class GameInfoUi : MonoBehaviour
 {
     public Text player1Text;
     public Text player2Text;
+
+    private ClientState _clientState = new ClientState();
+    private BoardState _boardState;
     
     // Start is called before the first frame update
     void Start()
@@ -28,14 +31,22 @@ public class GameInfoUi : MonoBehaviour
     
     public void SetNames(ClientState state)
     {
-        player1Text.text = state.Player1Name;
-        player2Text.text = state.Player2Name;
+        _clientState = state;
+        UpdateText();
     }
 
-    public void SetTurn(Player currentTurn)
+    public void SetBoardState(BoardState state)
     {
-        player1Text.fontStyle = currentTurn == Player.Red ? FontStyle.BoldAndItalic : FontStyle.Normal;
-        player2Text.fontStyle = currentTurn == Player.Blue ? FontStyle.BoldAndItalic : FontStyle.Normal;
+        _boardState = state;
+        player1Text.fontStyle = state.CurrentMove == Player.Red ? FontStyle.BoldAndItalic : FontStyle.Normal;
+        player2Text.fontStyle = state.CurrentMove == Player.Blue ? FontStyle.BoldAndItalic : FontStyle.Normal;
+        UpdateText();
+    }
+
+    private void UpdateText()
+    {
+        player1Text.text = $"{_clientState.Player1Name} - {_boardState?.RedScore ?? 0}";
+        player2Text.text = $"{_clientState.Player2Name} - {_boardState?.BlueScore ?? 0}";
     }
 
 }

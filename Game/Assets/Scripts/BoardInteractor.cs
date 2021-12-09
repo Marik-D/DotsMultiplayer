@@ -105,7 +105,7 @@ public class BoardInteractor : MonoBehaviour
             obj.GetComponent<SpriteShapeRenderer>().color = color;
         }
 
-        gameInfoUi.SetTurn(_state.CurrentMove);
+        gameInfoUi.SetBoardState(_state);
     }
 
     private Vector2 GetOnScreenLocation(int row, int col)
