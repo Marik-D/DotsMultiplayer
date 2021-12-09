@@ -9,7 +9,7 @@ namespace Backend
 
         private PlayerSession _waitingPlayer = null;
 
-        public GameState OnPlayerConnected(PlayerSession player)
+        public GameState JoinMatchmaking(PlayerSession player)
         {
             if (_waitingPlayer == null)
             {
@@ -17,11 +17,13 @@ namespace Backend
                 return null;
             }
 
+
             var game = new GameState
             {
                 Id = Guid.NewGuid(),
                 Players = new List<PlayerSession> {_waitingPlayer, player},
             };
+            Console.WriteLine($"Creating a new Game[{game.Id}] with players {game.Players[0].Id} {game.Players[1].Id}");
             _waitingPlayer = null;
             foreach (var session in game.Players)
             {

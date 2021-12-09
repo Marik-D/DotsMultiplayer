@@ -11,9 +11,11 @@ public class SocketBehaviour : MonoBehaviour
     public Text gameStateLabel;
     public Image gameStateLabelContainer;
     public SpriteRenderer boardRenderer;
-    public GameObject inGameUi;
+    public GameInfoUi gameInfoUi;
     
     public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
+    
+    public ClientState ClientState { get; set; }
     
     // Start is called before the first frame update
     void Start()
@@ -22,7 +24,7 @@ public class SocketBehaviour : MonoBehaviour
         Connection.Connect();
 
         boardRenderer.enabled = false;
-        inGameUi.SetActive(false);
+        gameInfoUi.SetVisible(false);
     }
 
     // Update is called once per frame
@@ -32,14 +34,16 @@ public class SocketBehaviour : MonoBehaviour
 
         Connection.ClientStateUpdated += state =>
         {
-            if (state == ClientState.Matchmaking)
+            ClientState = state;
+            if (state.State == ClientState.StateEnum.Matchmaking)
             {
                 gameStateLabel.text = "Matchmaking...";
             }
-            else if (state == ClientState.Playing)
+            else if (state.State == ClientState.StateEnum.Playing)
             {
                 boardRenderer.enabled = true;
-                inGameUi.SetActive(true);
+                gameInfoUi.SetVisible(true);
+                gameInfoUi.SetNames(state);
                 gameStateLabelContainer.gameObject.SetActive(false);
             }
         };

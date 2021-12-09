@@ -1,9 +1,17 @@
 ﻿namespace DotsCore
 {
-    public enum ClientState
+    public class ClientState
     {
-        None,
-        Matchmaking,
-        Playing
+        public enum StateEnum
+        {
+            None,
+            Matchmaking,
+            Playing
+        }
+
+        public StateEnum State;
+
+        public string Player1Name;
+        public string Player2Name;
     }
 }

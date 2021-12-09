@@ -34,6 +34,7 @@ namespace Backend
             {
                 PlayerName = name;
                 Console.WriteLine($"PlayerSession[{Id}] Joined matchmaking: name={name}");
+                _server.ServerState.JoinMatchmaking(this);
                 return null;
             });
         }
@@ -42,15 +43,22 @@ namespace Backend
         {
             Console.WriteLine($"PlayerSession[{Id}] Game stated: gameId={state.Id}");
             this._game = state;
-            this._rpc.Call<ClientState, object>("UpdateClientState", ClientState.Playing);
+            this._rpc.Call<ClientState, object>("UpdateClientState", new ClientState
+            {
+                State = ClientState.StateEnum.Playing,
+                Player1Name = _game.Players[0].PlayerName,
+                Player2Name = _game.Players[1].PlayerName,
+            });
             this._rpc.Call<BoardState, object>("UpdateBoardState", _game.BoardState);
         }
 
         public override void OnWsConnected(HttpRequest request)
         {
             Console.WriteLine($"PlayerSession[{Id}] Connected");
-            this._rpc.Call<ClientState, object>("UpdateClientState", ClientState.Matchmaking);
-            _server.ServerState.OnPlayerConnected(this);
+            this._rpc.Call<ClientState, object>("UpdateClientState", new ClientState
+            {
+                State = ClientState.StateEnum.Matchmaking,
+            });
         }
 
         public override void OnWsDisconnected()

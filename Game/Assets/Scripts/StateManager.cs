@@ -2,6 +2,6 @@
 {
     public static class StateManager
     {
-        public static string PlayerName;
+        public static string PlayerName = "Charlie";
     }
 }

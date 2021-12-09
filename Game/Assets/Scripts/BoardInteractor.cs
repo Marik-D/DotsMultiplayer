@@ -11,8 +11,7 @@ using UnityEngine.UIElements;
 public class BoardInteractor : MonoBehaviour
 {
     public SocketBehaviour socketBehaviour;
-
-    public Text currentTurnLabel; 
+    public GameInfoUi gameInfoUi;
     
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
@@ -106,7 +105,7 @@ public class BoardInteractor : MonoBehaviour
             obj.GetComponent<SpriteShapeRenderer>().color = color;
         }
 
-        currentTurnLabel.text = $"Current turn: {_state.CurrentMove.ToString()}";
+        gameInfoUi.SetTurn(_state.CurrentMove);
     }
 
     private Vector2 GetOnScreenLocation(int row, int col)
