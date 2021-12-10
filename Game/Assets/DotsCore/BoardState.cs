@@ -52,9 +52,9 @@ namespace DotsCore
 
         public List<Capture> Captures = new List<Capture>();
 
-        public bool RedFinished;
+        public bool RedFinished = false;
 
-        public bool BlueFinished;
+        public bool BlueFinished = false;
 
         public int RedScore;
 

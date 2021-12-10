@@ -14,7 +14,8 @@ namespace Backend
 
         public void MakeMove(Move move)
         {
-            BoardState.Place(move.Row, move.Col);
+            BoardState.PlaceByPlayer(new CellPos(move.Row, move.Col), move.Player);
+            BoardState.CurrentMove = BoardState.CurrentMove == Player.Red ? Player.Blue : Player.Red;
 
             foreach (var session in Players)
             {

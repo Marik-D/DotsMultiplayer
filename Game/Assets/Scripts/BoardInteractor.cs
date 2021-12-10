@@ -67,9 +67,9 @@ public class BoardInteractor : MonoBehaviour
 
             if (_state.CanPlace(cellRow, cellCol))
             {
-                Debug.Log($"Placing at row={cellRow} col={cellCol}");
+                Debug.Log($"Placing at row={cellRow} col={cellCol} player={_state.CurrentPlacer}");
                 socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentPlacer, Row = cellRow, Col = cellCol});                
-                _state.Place(cellRow, cellCol);
+                _state.PlaceByPlayer(new CellPos(cellRow, cellCol), _state.CurrentPlacer);
                 
                 SyncBoardState();
             } 

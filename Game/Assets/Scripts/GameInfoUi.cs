@@ -39,8 +39,8 @@ public class GameInfoUi : MonoBehaviour
     public void SetBoardState(BoardState state)
     {
         _boardState = state;
-        player1Text.fontStyle = state.CurrentMove == Player.Red ? FontStyle.BoldAndItalic : FontStyle.Normal;
-        player2Text.fontStyle = state.CurrentMove == Player.Blue ? FontStyle.BoldAndItalic : FontStyle.Normal;
+        player1Text.fontStyle = state.CurrentPlacer == Player.Red ? FontStyle.BoldAndItalic : FontStyle.Normal;
+        player2Text.fontStyle = state.CurrentPlacer == Player.Blue ? FontStyle.BoldAndItalic : FontStyle.Normal;
         UpdateText();
     }
 
