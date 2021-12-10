@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace;
 using DotsCore;
 using UnityEngine;
 using UnityEngine.U2D;
@@ -49,6 +50,11 @@ public class BoardInteractor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            if (StateManager.MyPlayer != _state.CurrentMove)
+            {
+                return;
+            }
+            
             var cursorWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             cursorWorldPos.z = 0;
 

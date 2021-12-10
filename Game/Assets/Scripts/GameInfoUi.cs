@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using DotsCore;
 using UnityEngine;
 using UnityEngine.UI;
@@ -45,8 +46,8 @@ public class GameInfoUi : MonoBehaviour
 
     private void UpdateText()
     {
-        player1Text.text = $"{_clientState.Player1Name} - {_boardState?.RedScore ?? 0}";
-        player2Text.text = $"{_clientState.Player2Name} - {_boardState?.BlueScore ?? 0}";
+        player1Text.text = $"{_clientState.Player1Name}{(StateManager.MyPlayer == Player.Red ? " (me)" : "")} - {_boardState?.RedScore ?? 0}";
+        player2Text.text = $"{_clientState.Player2Name}{(StateManager.MyPlayer == Player.Blue ? " (me)" : "")} - {_boardState?.BlueScore ?? 0}";
     }
 
 }

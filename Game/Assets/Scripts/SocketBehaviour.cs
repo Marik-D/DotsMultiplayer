@@ -15,8 +15,6 @@ public class SocketBehaviour : MonoBehaviour
     
     public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
     
-    public ClientState ClientState { get; set; }
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +32,7 @@ public class SocketBehaviour : MonoBehaviour
 
         Connection.ClientStateUpdated += state =>
         {
-            ClientState = state;
+            StateManager.ClientState = state;
             if (state.State == ClientState.StateEnum.Matchmaking)
             {
                 gameStateLabel.text = "Matchmaking...";
