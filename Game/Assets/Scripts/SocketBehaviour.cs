@@ -44,6 +44,11 @@ public class SocketBehaviour : MonoBehaviour
                 gameInfoUi.SetNames(state);
                 gameStateLabelContainer.gameObject.SetActive(false);
             }
+            else if (state.State == ClientState.StateEnum.GameOver)
+            {
+                gameStateLabelContainer.gameObject.SetActive(true);
+                gameStateLabel.text = $"Game over. Winner: {state.Winner}";
+            }
         };
     }
     

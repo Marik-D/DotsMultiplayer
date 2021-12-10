@@ -6,12 +6,15 @@
         {
             None,
             Matchmaking,
-            Playing
+            Playing,
+            GameOver,
         }
 
         public StateEnum State;
 
         public string Player1Name;
         public string Player2Name;
+
+        public Player Winner;
     }
 }

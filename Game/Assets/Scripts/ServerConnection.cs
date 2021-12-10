@@ -88,5 +88,10 @@ namespace DefaultNamespace
         {
             await this._rpc.Call<Move, object>("MakeMove", move);
         }
+        
+        public async Task FinishGame()
+        {
+            await this._rpc.Call<object, object>("FinishGame", null);
+        }
     }
 }

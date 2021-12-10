@@ -50,7 +50,7 @@ public class BoardInteractor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (StateManager.MyPlayer != _state.CurrentMove)
+            if (StateManager.MyPlayer != _state.CurrentPlacer)
             {
                 return;
             }
@@ -68,12 +68,17 @@ public class BoardInteractor : MonoBehaviour
             if (_state.CanPlace(cellRow, cellCol))
             {
                 Debug.Log($"Placing at row={cellRow} col={cellCol}");
-                socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentMove, Row = cellRow, Col = cellCol});                
+                socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentPlacer, Row = cellRow, Col = cellCol});                
                 _state.Place(cellRow, cellCol);
                 
                 SyncBoardState();
             } 
         }
+    }
+
+    public void FinishGame()
+    {
+        socketBehaviour.Connection.FinishGame();
     }
 
     void SyncBoardState()

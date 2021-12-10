@@ -24,17 +24,25 @@ namespace Backend
             {
                 this.SendText(msg);
             });
+            this._rpc.Handle<string, object>("JoinMatchmaking", name =>
+            {
+                PlayerName = name;
+                Console.WriteLine($"PlayerSession[{Id}] Joined matchmaking: name={name}");
+                _server.ServerState.JoinMatchmaking(this);
+                return null;
+            });
             this._rpc.Handle<Move, object>("MakeMove", move =>
             {
                 Console.WriteLine($"PlayerSession[{Id}] Made move {move}");
                 _game.MakeMove(move);
                 return null;
             });
-            this._rpc.Handle<string, object>("JoinMatchmaking", name =>
+            this._rpc.Handle<object, object>("FinishGame", _ =>
             {
-                PlayerName = name;
-                Console.WriteLine($"PlayerSession[{Id}] Joined matchmaking: name={name}");
-                _server.ServerState.JoinMatchmaking(this);
+                Console.WriteLine($"PlayerSession[{Id}] Finished game");
+                var thisPlayer = _game.Players[0].Id == this.Id ? Player.Red : Player.Blue;
+                _game.FinishGame(thisPlayer);
+                
                 return null;
             });
         }
@@ -50,6 +58,15 @@ namespace Backend
                 Player2Name = _game.Players[1].PlayerName,
             });
             this._rpc.Call<BoardState, object>("UpdateBoardState", _game.BoardState);
+        }
+
+        public void GameOver(Player winner)
+        {
+            this._rpc.Call<ClientState, object>("UpdateClientState", new ClientState
+            {
+                State = ClientState.StateEnum.GameOver,
+                Winner = winner,
+            });
         }
 
         public override void OnWsConnected(HttpRequest request)
