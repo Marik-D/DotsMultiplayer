@@ -13,7 +13,8 @@ public class BoardInteractor : MonoBehaviour
 {
     public SocketBehaviour socketBehaviour;
     public GameInfoUi gameInfoUi;
-    
+    public GameObject finishedGameText;
+
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
     public GameObject redCapturePrefab;
@@ -78,6 +79,7 @@ public class BoardInteractor : MonoBehaviour
 
     public void FinishGame()
     {
+        finishedGameText.SetActive(true);
         socketBehaviour.Connection.FinishGame();
     }
 

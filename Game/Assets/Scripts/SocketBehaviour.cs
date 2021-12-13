@@ -12,7 +12,8 @@ public class SocketBehaviour : MonoBehaviour
     public Image gameStateLabelContainer;
     public SpriteRenderer boardRenderer;
     public GameInfoUi gameInfoUi;
-    
+    public GameObject inGameUiContainer;
+
     public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
     
     // Start is called before the first frame update
@@ -40,12 +41,14 @@ public class SocketBehaviour : MonoBehaviour
             else if (state.State == ClientState.StateEnum.Playing)
             {
                 boardRenderer.enabled = true;
+                inGameUiContainer.SetActive(true);
                 gameInfoUi.SetVisible(true);
                 gameInfoUi.SetNames(state);
                 gameStateLabelContainer.gameObject.SetActive(false);
             }
             else if (state.State == ClientState.StateEnum.GameOver)
             {
+                inGameUiContainer.SetActive(false);
                 gameStateLabelContainer.gameObject.SetActive(true);
                 gameStateLabel.text = $"Game over. Winner: {state.Winner}";
             }
