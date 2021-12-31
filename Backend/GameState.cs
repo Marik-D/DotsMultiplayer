@@ -10,15 +10,43 @@ namespace Backend
         
         public BoardState BoardState = new BoardState(15, 15);
         
-        public List<SocketSession> Players = new List<SocketSession>();
+        public List<PlayerSession> Players = new List<PlayerSession>();
 
         public void MakeMove(Move move)
         {
-            BoardState.Place(move.Row, move.Col);
+            BoardState.PlaceByPlayer(new CellPos(move.Row, move.Col), move.Player);
+            BoardState.CurrentMove = BoardState.CurrentMove == Player.Red ? Player.Blue : Player.Red;
 
             foreach (var session in Players)
             {
                 session.UpdateBoardState(BoardState);
+            }
+        }
+
+        public void FinishGame(Player player)
+        {
+            Console.WriteLine($"Game[{Id}] {player} has finished");
+            if (player == Player.Red)
+            {
+                BoardState.RedFinished = true;
+            }
+            else
+            {
+                BoardState.BlueFinished = true;
+            }
+            
+            foreach (var session in Players)
+            {
+                session.UpdateBoardState(BoardState);
+            }
+
+            if (BoardState.IsGameOver)
+            {
+                Console.WriteLine($"Game[{Id}] Game over. Score: {BoardState.RedScore} - {BoardState.BlueScore}");
+                foreach (var session in Players)
+                {
+                    session.GameOver(BoardState.RedScore > BoardState.BlueScore ? Player.Red : Player.Blue);
+                }
             }
         }
     }

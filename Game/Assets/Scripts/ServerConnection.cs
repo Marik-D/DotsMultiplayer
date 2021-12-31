@@ -4,17 +4,22 @@ using DotsCore;
 using NativeWebSocket;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DefaultNamespace
 {
     public class ServerConnection
     {
+        public Text gameStateLabel;
+        public Image gameStateLabelContainer;
+        
         private readonly WebSocket _socket;
         private readonly JsonRpc _rpc;
 
         public WebSocketState State => _socket.State;
         
         public event Action<BoardState> BoardStateUpdated;
+        public event Action<ClientState> ClientStateUpdated;
 
         public ServerConnection(string endpoint)
         {
@@ -23,6 +28,8 @@ namespace DefaultNamespace
             _socket.OnOpen += () =>
             {
                 Debug.Log("Connection open!");
+
+                _rpc.Call<string, object>("JoinMatchmaking", StateManager.PlayerName);
             };
 
             _socket.OnError += (e) =>
@@ -49,6 +56,8 @@ namespace DefaultNamespace
             this._rpc.Handle<ClientState>("UpdateClientState", state =>
             {
                 Debug.Log("Client state updated " + state);
+
+                this.ClientStateUpdated?.Invoke(state);
             });
 
             this._rpc.Handle<BoardState>("UpdateBoardState", state =>
@@ -77,7 +86,12 @@ namespace DefaultNamespace
 
         public async Task MakeMove(Move move)
         {
-            this._rpc.Call<Move, object>("MakeMove", move);
+            await this._rpc.Call<Move, object>("MakeMove", move);
+        }
+        
+        public async Task FinishGame()
+        {
+            await this._rpc.Call<object, object>("FinishGame", null);
         }
     }
 }

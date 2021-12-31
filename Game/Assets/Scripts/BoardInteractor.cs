@@ -2,15 +2,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace;
 using DotsCore;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 public class BoardInteractor : MonoBehaviour
 {
     public SocketBehaviour socketBehaviour;
-    
+    public GameInfoUi gameInfoUi;
+    public GameObject finishedGameText;
+
     public GameObject redDotPrefab;
     public GameObject blueDotPrefab;
     public GameObject redCapturePrefab;
@@ -47,6 +51,11 @@ public class BoardInteractor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            if (StateManager.MyPlayer != _state.CurrentPlacer)
+            {
+                return;
+            }
+            
             var cursorWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             cursorWorldPos.z = 0;
 
@@ -59,13 +68,19 @@ public class BoardInteractor : MonoBehaviour
 
             if (_state.CanPlace(cellRow, cellCol))
             {
-                Debug.Log($"Placing at row={cellRow} col={cellCol}");
-                socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentMove, Row = cellRow, Col = cellCol});                
-                _state.Place(cellRow, cellCol);
+                Debug.Log($"Placing at row={cellRow} col={cellCol} player={_state.CurrentPlacer}");
+                socketBehaviour.Connection.MakeMove(new Move {Player = _state.CurrentPlacer, Row = cellRow, Col = cellCol});                
+                _state.PlaceByPlayer(new CellPos(cellRow, cellCol), _state.CurrentPlacer);
                 
                 SyncBoardState();
             } 
         }
+    }
+
+    public void FinishGame()
+    {
+        finishedGameText.SetActive(true);
+        socketBehaviour.Connection.FinishGame();
     }
 
     void SyncBoardState()
@@ -102,6 +117,8 @@ public class BoardInteractor : MonoBehaviour
             color.a = captureOpacity;
             obj.GetComponent<SpriteShapeRenderer>().color = color;
         }
+
+        gameInfoUi.SetBoardState(_state);
     }
 
     private Vector2 GetOnScreenLocation(int row, int col)

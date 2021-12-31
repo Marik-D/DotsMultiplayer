@@ -12,7 +12,7 @@ namespace Backend
         
         public SocketServer(IPAddress address, int port) : base(address, port) { }
 
-        protected override TcpSession CreateSession() { return new SocketSession(this); }
+        protected override TcpSession CreateSession() { return new PlayerSession(this); }
 
         protected override void OnError(SocketError error)
         {

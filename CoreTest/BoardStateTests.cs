@@ -145,6 +145,43 @@ R B . .
 
                 Assert.AreEqual(1, board.Captures.Count);
             }
+            
+            [Test]
+            public void ScoreIsUpdatedOnCapture()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. R .
+R B .
+. R .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(1, board.RedScore);
+                Assert.AreEqual(0, board.BlueScore);
+            }
+            
+            [Test]
+            public void CapturedPointsCannotParticipateInCapture()
+            {
+                var board = TestUtils.ParseBoardState(@"
+. R B B .
+R B . R .
+. R B B .
+                ");
+
+                board.PlaceByPlayer(new CellPos(1, 2), Player.Red);
+
+                Assert.AreEqual(1, board.Captures.Count);
+                Assert.AreEqual(1, board.RedScore);
+                Assert.AreEqual(0, board.BlueScore);
+                
+                board.PlaceByPlayer(new CellPos(1, 4), Player.Blue);
+
+                Assert.AreEqual(1, board.Captures.Count);
+                Assert.AreEqual(1, board.RedScore);
+                Assert.AreEqual(0, board.BlueScore);
+            }
         }
     }
 }
