@@ -1,0 +1,172 @@
+<mxfile host="65bd71144e">
+    <diagram id="kxeD-s-9KA8B5qhph4Wx" name="Page-1">
+        <mxGraphModel dx="2013" dy="1189" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="50" value="repeating" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="79" y="520" width="691" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="repeating" style="shape=umlFrame;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="79" y="180" width="691" height="240" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="Red player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="144" y="81" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="Server" style="shape=umlLifeline;participant=umlEntity;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;verticalAlign=top;spacingTop=36;outlineConnect=0;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="379" y="111" width="40" height="649" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Blue player" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fontStyle=1" vertex="1" parent="1">
+                    <mxGeometry x="624" y="80" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="" style="endArrow=none;dashed=1;html=1;entryX=0.5;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=1" edge="1" parent="1" target="2">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="159" y="760" as="sourcePoint"/>
+                        <mxPoint x="299" y="231" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="159" y="190"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="6" value="" style="endArrow=none;dashed=1;html=1;entryX=0.5;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="639" y="760" as="sourcePoint"/>
+                        <mxPoint x="638.5799999999999" y="130" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="7" value="MakeMove" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1" target="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="159" y="240" as="sourcePoint"/>
+                        <mxPoint x="469" y="271" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1" source="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="399" y="380" as="sourcePoint"/>
+                        <mxPoint x="159" y="260" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="20" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1" source="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="408.5" y="230" as="sourcePoint"/>
+                        <mxPoint x="640" y="280" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="28" value="optimistic update" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="160" y="200" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="190" y="200"/>
+                            <mxPoint x="190" y="220"/>
+                        </Array>
+                        <mxPoint x="160" y="220" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="37" value="optimistic update" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="640" y="320" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="670" y="320"/>
+                            <mxPoint x="670" y="340"/>
+                        </Array>
+                        <mxPoint x="640" y="340" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="38" value="MakeMove" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1" target="3">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="640" y="360" as="sourcePoint"/>
+                        <mxPoint x="639.5" y="370" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="40" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398" y="380" as="sourcePoint"/>
+                        <mxPoint x="158.5" y="380" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="41" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398.42857142857133" y="400" as="sourcePoint"/>
+                        <mxPoint x="639.5" y="400" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="47" value="Finish game" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="158.5" y="460" as="sourcePoint"/>
+                        <mxPoint x="398" y="460" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="48" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398" y="480" as="sourcePoint"/>
+                        <mxPoint x="158.5" y="480" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="49" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398.42857142857133" y="500" as="sourcePoint"/>
+                        <mxPoint x="639.5" y="500" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="55" value="optimistic update" style="edgeStyle=orthogonalEdgeStyle;html=1;align=left;spacingLeft=2;endArrow=block;rounded=0;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="639.5" y="540" as="sourcePoint"/>
+                        <Array as="points">
+                            <mxPoint x="669.5" y="540"/>
+                            <mxPoint x="669.5" y="560"/>
+                        </Array>
+                        <mxPoint x="639.5" y="560" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="56" value="MakeMove" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="639.5" y="580" as="sourcePoint"/>
+                        <mxPoint x="398.42857142857133" y="580" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="57" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="397.5" y="600" as="sourcePoint"/>
+                        <mxPoint x="158" y="600" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="58" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="397.92857142857133" y="620" as="sourcePoint"/>
+                        <mxPoint x="639" y="620" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="59" value="Finish game" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="640" y="660" as="sourcePoint"/>
+                        <mxPoint x="398" y="660" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="60" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398" y="680" as="sourcePoint"/>
+                        <mxPoint x="158.5" y="680" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="61" value="UpdateBoardState" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398.42857142857133" y="700" as="sourcePoint"/>
+                        <mxPoint x="639.5" y="700" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="63" value="UpdateClientState(GameOver)" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398" y="720" as="sourcePoint"/>
+                        <mxPoint x="158.5" y="720" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="64" value="UpdateClientState(GameOver)" style="endArrow=classic;html=1;fontStyle=1" edge="1" parent="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="398.42857142857133" y="740" as="sourcePoint"/>
+                        <mxPoint x="639.5" y="740" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
