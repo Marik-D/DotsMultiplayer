@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using DotsCore;
 using NetCoreServer;
 using Newtonsoft.Json;
@@ -72,10 +73,16 @@ namespace Backend
         public override void OnWsConnected(HttpRequest request)
         {
             Console.WriteLine($"PlayerSession[{Id}] Connected");
+            OnConnected();
+        }
+
+        async Task OnConnected()
+        {
+            await Task.Delay(100);
             this._rpc.Call<ClientState, object>("UpdateClientState", new ClientState
             {
                 State = ClientState.StateEnum.Matchmaking,
-            });
+            }); 
         }
 
         public override void OnWsDisconnected()
