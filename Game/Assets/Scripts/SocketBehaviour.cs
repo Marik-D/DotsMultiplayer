@@ -14,7 +14,9 @@ public class SocketBehaviour : MonoBehaviour
     public GameInfoUi gameInfoUi;
     public GameObject inGameUiContainer;
 
-    public ServerConnection Connection = new ServerConnection("ws://localhost:8080");
+    private const bool Remote = false;
+    
+    public ServerConnection Connection = new ServerConnection(Remote ? "ws://142.93.162.57:8080" : "ws://localhost:8080");
     
     // Start is called before the first frame update
     void Start()
