@@ -14,7 +14,7 @@ public class SocketBehaviour : MonoBehaviour
     public GameInfoUi gameInfoUi;
     public GameObject inGameUiContainer;
 
-    private const bool Remote = false;
+    private const bool Remote = true;
     
     public ServerConnection Connection = new ServerConnection(Remote ? "ws://142.93.162.57:8080" : "ws://localhost:8080");
     
